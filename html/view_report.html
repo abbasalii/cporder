@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Reports Section - Allied School</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="default.css">
+	<link rel="stylesheet" type="text/css" href="view_report.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="view_report.js"></script>
+</head>
+<body>
+	<div id="header">
+		<img id="header-image" src="/header.png" />
+		<h1 id="header-title">Allied School Bosan Road Campus, Multan</h1>
+		<a id="logout-btn" href="/logout">Logout</a>
+	</div>
+	<div id="content">
+		<div id="search-div">
+			<div id="search-inner">
+				<form id="form" action="/get_report">
+					<input class="input-report" id="class" type="text" name="class" placeholder="Class" list="cList" required/>
+					<input class="input-report" id="section" type="text" name="section" placeholder="Section" required/>
+					<input class="report-button" type="submit" value="View"/>
+				</form>
+			</div>
+		</div>
+		<div id="report-div">
+			<table id="report-tab"></table>
+		</div>
+	</div>
+	<div id="messagebox">
+		<div id="messagebox-inner">
+			<div id="messagebox-core">
+				<div id="user-message">Dummy Message</div>
+				<input class="input-button" type="button" id="hide-message-box" value="OK" />
+			</div>
+		</div>
+	</div>
+	<datalist id="cList"></datalist>
+</body>
+</html>

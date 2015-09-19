@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login - Allied School</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="default.css">
+	<link rel="stylesheet" type="text/css" href="login.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="login.js"></script>
+</head>
+<body>
+	<div id="login-div">
+		<form id="form" action="/login" method="post">
+			<div><img id="logo" src="/login.png" alt="Logo"/></div>
+			<div><input class="input-field" type="text" name="user" placeholder="Username" required/></div>
+			<div><input class="input-field" type="password" name="pass" placeholder="Password" required/></div>
+			<div id="error">*invalid username or password</div>
+			<div><input class="input-button" type="submit" value="Login"/></div>
+		</form>
+	</div>
+</body>
+</html>

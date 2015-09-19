@@ -1,0 +1,224 @@
+#search-div{
+	width: 100%;
+	text-align: center;
+}
+
+#search-inner{
+	display: inline-block;
+	border: 1px solid #29ABE2;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+#search-filter-tab td{
+	padding: 4px;
+}
+
+.search-title{
+	color: #195294;
+	border-radius: 4px;
+	font-weight: bold;
+	font-size: 20pt;
+}
+
+.search-field{
+	width: 224px;
+	padding: 10px;
+	border-radius: 4px;
+	border: 1px solid #29ABE2;
+	outline: none;
+}
+
+.class-field{
+	width: 128px;
+}
+
+.section-field{
+	width: 128px;
+}
+
+.search-button{
+	/*width: 128px;*/
+	height: 36px;
+	text-align: center;
+	vertical-align: middle;
+	background: #29ABE2;
+	color: #fff;
+	border-radius: 4px;
+	border: 2px solid #29ABE2;
+	padding: 0 24px;
+}
+
+#student-div{
+	z-index: 1;
+}
+
+#student-info-div{
+	
+}
+
+#student-info-tab{
+
+}
+
+#student-info-tab td{
+	padding: 4px;
+}
+
+#student-result-container{
+/*	display: none;
+	position: absolute;
+	top:72px;
+	left: 0;
+	background-color: #EEF9FD;*/
+	z-index: 2;
+/*	width: 100%;
+	height: 100%;
+	overflow: auto;*/
+}
+
+#student-result-div{
+	/*text-align: center;*/
+}
+
+#student-result-tab{
+	border: 1px solid #98DAF1;
+	display: inline-block;
+}
+
+#student-result-tab th{
+	border: 1px solid #98DAF1;
+	padding: 8px;
+	background-color:  #29ABE2;
+	color: #fff;
+}
+
+#student-result-tab td{
+	border: 1px solid #98DAF1;
+	padding: 8px;
+}
+
+#student-fee-div{
+	z-index: 3;
+}
+
+#student-fee-inner{
+	/*display: inline-block;*/
+}
+
+#student-fee-tab{
+	border: 1px solid #98DAF1;
+}
+
+#student-fee-tab th{
+	border: 1px solid #98DAF1;
+	padding: 8px;
+	background-color:  #29ABE2;
+	color: #fff;
+}
+
+#student-fee-tab td{
+	border: 1px solid #98DAF1;
+	padding: 8px;
+}
+
+.view-result-class{
+	background: none;
+	outline: none;
+	border: none;
+	font-weight: bold;
+}
+.view-result-class:hover{
+	cursor: pointer;
+}
+
+#new-challan-div{
+	z-index: 4;
+}
+
+#new-challan-inner{
+
+}
+
+#new-challan-student{
+	display: none;
+}
+
+#new-challan-form{
+
+}
+
+#issue-challan{
+	background-color: #195294;
+	border: 2px solid #195294;
+}
+
+#student-challan-div{
+	z-index: 4;
+}
+
+#payment-div{
+	display: none;
+}
+
+#invoice-id{
+	display: none;
+}
+
+#print-view{
+/*	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #fff;
+	z-index: 0;
+	width: 100%;
+	height: 100%;*/
+}
+
+
+@media print{
+	#student-challan-div{
+		position: absolute;
+		top:0;
+		left: 0;
+		background-color: #fff;
+		z-index: 4;
+		width: 100%;
+		height: 100%;
+		overflow: visible;
+	}
+
+	.dismiss-btn{
+		display: none;
+	}
+
+	#print-btn-div{
+		display: none;
+	}
+}
+
+#search-result-outer{
+	width: 100%;
+	text-align: center;
+}
+
+#search-result-inner{
+	display: inline-block;
+	margin: 32px 16px;
+}
+
+#search-result-tab{
+	border: 1px solid #98DAF1;
+}
+
+#search-result-tab th{
+	border: 1px solid #98DAF1;
+	padding: 8px;
+	background-color:  #29ABE2;
+	color: #fff;
+}
+
+#search-result-tab td{
+	border: 1px solid #98DAF1;
+	padding: 8px;
+}

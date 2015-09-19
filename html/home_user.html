@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home User</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="default.css">
+	<link rel="stylesheet" type="text/css" href="home.css">
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="home.js"></script>
+</head>
+<body>
+	<div id="header">
+		<img id="header-image" src="logo.png" alt="Logo"/>
+		<a id="logout-btn" href="/logout">Logout</a>
+	</div>
+	<div id="content">
+		<div id="items-list">
+		</div>
+
+		<div id="order-detail">
+			<div id="order-list">
+				<table id="order-table">
+				</table>
+			</div>
+			<div id="total-wrapper"><div id="order-total">Total: Rs. <span id="order-total-amount">0</span>/-</div></div>
+			<div id="order-btn-wrapper"><input id="place-order-btn" type="button" value="Place Order"/></div>
+		</div>
+	</div>
+	<div id="footer"></div>
+</body>
+</html>

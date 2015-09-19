@@ -1,0 +1,28 @@
+#container{
+	text-align: center;
+}
+
+#inner{
+	display: inline-block;
+	border: 1px solid #29ABE2;
+	border-radius: 32px;
+	padding: 10px;
+	margin: 20px 10px;
+}
+
+#audience{
+	width: 256px;
+	text-align: left;
+}
+
+#annual-fee{
+	/*display: none;*/
+}
+
+#transport{
+	/*display: none;*/
+}
+
+#sms-area{
+	/*display: none;*/
+}

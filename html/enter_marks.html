@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Enter Marks - Allied School</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="default.css">
+	<link rel="stylesheet" type="text/css" href="enter_marks.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="enter_marks.js"></script>
+</head>
+<body>
+	<div id="header">
+		<img id="header-image" src="/header.png" />
+		<h1 id="header-title">Allied School Bosan Road Campus, Multan</h1>
+		<a id="logout-btn" href="/logout">Logout</a>
+	</div>
+	<div id="content">
+		<div id="search-div">
+			<div id="search-inner">
+				<form id="search-form" action="/get_assessment" method="get">
+					<table id="search-filter-tab">
+						<tr>
+							<td><input class="search-field" id="search-class" type="text" name="class" placeholder="Class" list="cList"/></td>
+							<td><input class="search-field" id="search-section" type="text" name="section" placeholder="Section"/></td>
+							<td><input class="search-field" id="search-subject" type="text" name="subject" placeholder="Subject" list="sList"/></td>
+						</tr>
+						<tr>
+							<td><input class="search-field" id="search-type" type="text" name="type" placeholder="Assessment"/></td>
+							<td><input class="search-date" id="search-date" type="date" id="ass_date" name="date"/></td>
+							<td><input class="search-button" type="submit" value="Search"/></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+
+		<div id="result-div">
+			<div id="result-inner">
+				<div class="right"><input id="show-assessment-div" type="image" src="/add-btn.png" width="64px" height="64px"></div>
+				<div><table id="search-result"></table></div>
+			</div>
+		</div>
+
+		<div id="add-assessment-div" class="popup-container">
+			<div id="add-assessment-inner" class="popup-inner">
+				<input id="hide-assessment-div" class="dismiss-btn" type="button" value="X"/>
+				<form id="add-form" action="/add_assessment" method="post">
+
+					<table id="add-ass-tab">
+						<tr>
+							<td class="input-label"><label for="assessment-class">Class</label></td>
+							<td><input class="input-field" id="assessment-class" type="text" name="class" placeholder="" list="cList" required/></td>
+						</tr>
+						<tr>
+							<td class="input-label"><label for="assessment-section">Section</label></td>
+							<td><input class="input-field" id="assessment-section" type="text" name="section" placeholder="" required/></td>
+						</tr>
+						<tr>
+							<td class="input-label"><label for="assessment-subject">Subject</label></td>
+							<td><input class="input-field" id="assessment-subject" type="text" name="subject" placeholder="" list="sList" required/></td>
+						</tr>
+						<tr>
+							<td class="input-label"><label for="assessment-name">Assessment</label></td>
+							<td><input class="input-field" id="assessment-name" type="text" name="type" placeholder="" required/></td>
+						</tr>
+						<tr>
+							<td class="input-label"><label for="assessment-total">Total Marks</label></td>
+							<td><input class="input-field" id="assessment-total" type="number" name="total" placeholder="" min="10" required/></td>
+						</tr>
+						<tr>
+							<td class="input-label"><label for="ass_date">Date</label></td>
+							<td><input class="input-field" type="date" id="ass_date" name="date" required/></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input class="input-button" type="submit" value="Add New"/></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+
+		<div id="marksheet-div" class="popup-container">
+			<div id="marksheet-inner" class="popup-inner">
+				<input id="hide-marksheet-div" class="dismiss-btn" type="button" value="X"/>
+				<table id="marksheet"></table>
+				<input id="update-marks" type='button' value='Update'/>
+			</div>
+		</div>
+	</div>
+	<div id="messagebox">
+		<span id="user-message">Dummy Message</span>
+		<input type="button" id="hide-message-box" value="OK" />
+	</div>
+	<datalist id="cList"></datalist>
+	<datalist id="sList"></datalist>
+</body>
+</html>

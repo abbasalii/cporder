@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home Admin</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="default.css">
+	<link rel="stylesheet" type="text/css" href="home.css">
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="home.js"></script>
+</head>
+<body>
+	<div id="header">
+		<img id="header-image" src="/header.png" />
+		<h1 id="header-title">Allied School Bosan Road Campus, Multan</h1>
+		<a id="logout-btn" href="/logout">Logout</a>
+	</div>
+	<div id="content">
+
+		<div id="menu-wrapper-upper">
+			<ul class="menu">
+				<li><a class="menu-item" href="/add_student">Add New Student</a></li>
+				<li><a class="menu-item" href="/search_student">Search Student</a></li>
+				<li><a class="menu-item" href="/generate_invoice">Generate Invoice</a></li>
+				<li><a class="menu-item" href="/send_sms">Send SMS</a></li>
+			</ul>
+		</div>
+		<div id="menu-wrapper-lower">
+			<ul class="menu">
+				<li><a class="menu-item" href="/view_report">View Report</a></li>
+				<li><a class="menu-item" href="/enter_marks">Enter Marks</a></li>
+				<li><a class="menu-item" id="promote" href="#">Promote Students</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="footer"></div>
+	<script>
+		io.connect("localhost:8080");
+	</script>
+</body>
+</html>

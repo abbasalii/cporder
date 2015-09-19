@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Generate Fee Invoice - Allied School</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="default.css">
+	<link rel="stylesheet" type="text/css" href="generate_invoice.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="generate_invoice.js"></script>
+</head>
+<body>
+	<div id="header">
+		<img id="header-image" src="/header.png" />
+		<h1 id="header-title">Allied School Bosan Road Campus, Multan</h1>
+		<a id="logout-btn" href="/logout">Logout</a>
+	</div>
+	<div id="content">
+		<div id="container">
+			<div id="inner">
+				<form action="/generate_invoice" id="form">
+					<table>
+						<tr>
+							<td colspan="2"><h2 class="sub-head">Generate Invoices</h2></td>
+						</tr>
+						<tr>
+							<td class="input-label">Class:</td>
+							<td id="audience"></td>
+						</tr>
+						<tr>
+							<td class="input-label"><label for="start-date">Starting Date:</label></td>
+							<td><input class="input-field" id="start-date" type="date" required/></td>
+						</tr>
+						<tr>
+							<td class="input-label"><label for="end-date">Ending Date:</label></td>
+							<td><input class="input-field" id="end-date" type="date" required/></td>
+						</tr>
+						<tr>
+							<td class="input-label"><label for="due-date">Due Date:</label></td>
+							<td><input class="input-field" id="due-date" type="date" required/></td>
+						</tr>
+						<tr>
+							<td class="input-label">
+								<label for="add-annual">Annual Fee</label>
+								<input id="add-annual" type="checkbox"/>
+							</td>
+							<td><input class="input-field" id="annual-fee" type="number" disabled/></td>
+						</tr>
+						<tr>
+							<td class="input-label">
+								<label for="add-transport">Transport</label>
+								<input id="add-transport" type="checkbox"/>
+							</td>
+							<td><input class="input-field" id="transport" type="number" disabled/></td>
+						</tr>
+						<tr>
+							<td class="area-label-outer">
+								<span class="area-label-inner">
+									<label for="send-sms">Send SMS</label>
+									<input id="send-sms" type="checkbox"/>
+								</span>
+							</td>
+							<td><textarea class="input-area" id="sms-area" placeholder="Enter your message here..." disabled></textarea></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input class="input-button" id="generate-btn" type="submit" value="Generate"/></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div id="messagebox">
+		<span id="user-message">Dummy Message</span>
+		<input type="button" id="hide-message-box" value="OK" />
+	</div>
+</body>
+</html>

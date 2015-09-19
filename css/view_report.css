@@ -1,0 +1,51 @@
+#search-div{
+	text-align: center;
+}
+
+#search-inner{
+	display: inline-block;
+	border: 1px solid #29ABE2;
+	border-radius: 8px;
+	padding: 8px 16px;
+}
+
+
+.input-report{
+	border-radius: 10px;
+	border: 1px solid #29ABE2;
+	outline: none;
+	padding: 10px;
+}
+
+.report-button{
+	width: 96px;
+	height: 32px;
+	text-align: center;
+	vertical-align: middle;
+	background: #29ABE2;
+	color: #fff;
+	border-radius: 4px;
+	border: 2px solid #29ABE2;
+}
+
+#report-div{
+	text-align: center;
+	margin: 24px;
+}
+
+#report-tab{
+	border: 1px solid #98DAF1;
+	display: inline-block;
+}
+
+#report-tab th{
+	border: 1px solid #98DAF1;
+	padding: 8px;
+	background-color:  #29ABE2;
+	color: #fff;
+}
+
+#report-tab td{
+	border: 1px solid #98DAF1;
+	padding: 8px;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Send Notification - Allied School</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="default.css">
+	<link rel="stylesheet" type="text/css" href="send_sms.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="send_sms.js"></script>
+</head>
+<body>
+	<div id="header">
+		<img id="header-image" src="/header.png" />
+		<h1 id="header-title">Allied School Bosan Road Campus, Multan</h1>
+		<a id="logout-btn" href="/logout">Logout</a>
+	</div>
+	<div id="content">
+		<div id="container">
+			<div id="inner">
+				<h2 class="sub-head">Send SMS Notification</h2>
+				<div id="audience"></div>
+				<div>
+					<textarea id="sms-area" placeholder="Type Your message here..."></textarea>
+				</div>
+				<div id="send-btn-div">
+					<input id="send-btn" type="button" value='Send'/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="messagebox">
+		<span id="user-message">Dummy Message</span>
+		<input type="button" id="hide-message-box" value="OK" />
+	</div>
+</body>
+</html>
