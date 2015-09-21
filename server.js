@@ -13,8 +13,12 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var rand = require('random-key');
 var socket = require('socket.io');
+var multipart = require('connect-multiparty');
+var fs = require('fs');
 
+var multipartMiddleware = multipart();
 var app = express();
+
 var pool 	=    mysql.createPool({
     connectionLimit : 10,
     host     : 'localhost',
@@ -29,6 +33,7 @@ app.use(cookieParser());
 app.use(session({secret: rand.generate(64)}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use(express.static('js'));
 app.use(express.static('css'));
@@ -183,6 +188,43 @@ app.post('/place_order',function(req,res){
 		);
 	});
 });
+
+app.get('/get_orderlist',function(req, res){
+
+	pool.getConnection(function(err,connection){
+
+		if (err) {
+			console.log("Failed to connect to the database");
+			res.json({"code":500});
+		}
+
+		connection.query('SELECT FACULTY_ORDER.ID, CONCAT(SYSTEM_USER.FIRST_NAME, " ", SYSTEM_USER.LAST_NAME) "NAME",'
+			+' FACULTY_ORDER.ORDER_BY, FACULTY_ORDER.ORDER_DATE,'
+			+' FACULTY_ORDER.STATUS FROM FACULTY_ORDER, SYSTEM_USER'
+			+' WHERE FACULTY_ORDER.ORDER_BY = SYSTEM_USER.ID',
+			function(err,rows,fields) {
+
+				connection.release();
+				if(err){
+					console.log("Failed to fetch order list");
+					res.json({"code":500});
+				}
+				else{
+					res.json({"code":200, "data":rows});
+				}
+			}
+
+		);
+	});
+
+});
+
+// app.post('/api/photo', multipartMiddleware,function(req,res){
+// 	var path = __dirname+'/img/'+req.files.userPhoto.originalFilename;
+// 	var from = req.files.userPhoto.path;
+// 	fs.createReadStream(from).pipe(fs.createWriteStream(path));
+// 	res.json({"code":200});
+// });
 
 // app.get('/add_student',function(req, res){
 
