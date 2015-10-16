@@ -21,8 +21,27 @@
 			<input type="submit" value="Upload Image" name="submit">
 		</form> -->
 
+		<div><input id="get-order-btn" type="button" value="Get Orders"/></div>
 		<div id="order-list">
-			<table id="order-table"></table>
+			<div class="inner">
+				<input id="hide-order-btn" class="dismiss-btn" type="button" value="X"/>
+				<table id="order-table"></table>
+			</div>
+		</div>
+		<div id="order-detail">
+			<div class="inner">
+				<input id="hide-detail-btn" class="dismiss-btn" type="button" value="X"/>
+				<table id="order-detail-tab"></table>
+				<div id="deliver-order">
+					<label for="deliver-checkbox">Deliver Order </label>
+					<input id="deliver-checkbox" type="checkbox"/>
+					<input id="deliver-button" type="button" value="Proceed" disabled/>
+				</div>
+			</div>
+		</div>
+
+		<div id="menu-items">
+			<table id="menu-table"></table>
 		</div>
 	</div>
 	<div id="footer"></div>

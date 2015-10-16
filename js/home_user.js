@@ -10,7 +10,7 @@ $(function(){
 		type: "get",
 		success: function(response){
 			if(response.code==200){
-				itemList = response.data;
+				itemList = response.data;console.log(itemList);
 				displayItemList(itemList);
 			}
 			else{
@@ -22,9 +22,15 @@ $(function(){
 	var displayItemList = function(){
 
 		var text = "";
+		var category = "";
 		for(var i=0; i<itemList.length; i++)
 		{
-			text += '<div class="item-container">';
+			if(itemList[i].CATEGORY!=category)
+			{
+				text += '<div class="category-title">' + itemList[i].CATEGORY + '</div>';
+				category = itemList[i].CATEGORY;
+			}
+			text += '<div id="' + i + '" class="item-container">';
 			text += '<div class="img-wrapper">';
 			text += '<img src="' + itemList[i].IMAGE + '" class="item-img"/>';
 			text += '<div class="title-wrapper"><div class="item-title">' + itemList[i].NAME + '</div></div>';
@@ -41,7 +47,8 @@ $(function(){
 
 			$(this).click(function(){
 
-				var item = $(this).closest('.item-container').index();
+				var item = $(this).closest('.item-container').attr("id");
+				// alert("index: "+item);
 				addItemToOrder(item);
 			});
 		});

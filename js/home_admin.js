@@ -7,21 +7,26 @@ $(function(){
 	var itemList = null;
 	var orderList = [];
 	var qtyList = [];
+	var orderIndex;
+	var orderItems = [];
+	var menuList = [];
 
-	$.ajax({
-		url: "/get_orderlist",
-		type: "get",
-		success: function(response){
-			if(response.code==200){
-				orderList = response.data;
-				displayOrderList();
-				console.log(orderList);
+	var getOrderList = function()
+	{
+		$.ajax({
+			url: "/get_orderlist",
+			type: "get",
+			success: function(response){
+				if(response.code==200){
+					orderList = response.data;
+					displayOrderList();
+				}
+				else{
+					alert("404");
+				}
 			}
-			else{
-				alert("404");
-			}
-		}
-	});
+		});
+	}
 
 	var displayOrderList = function(){
 
@@ -45,6 +50,16 @@ $(function(){
 			text += '</tr>';
 		}
 		$("#order-table").html(text);
+		$("#order-list").show();
+
+		$(".view-order-detail").each(function(){
+
+			$(this).click(function(){
+
+				orderIndex = $(this).closest('tr').index() - 1;
+				getOrderItems();
+			});
+		});
 	}
 
 	var formatDate = function(date){
@@ -58,148 +73,162 @@ $(function(){
 		return d.toLocaleTimeString();
 	}
 
-	// var displayItemList = function(){
+	var getOrderItems = function(){
 
-	// 	var text = "";
-	// 	for(var i=0; i<itemList.length; i++)
-	// 	{
-	// 		text += '<div class="item-container">';
-	// 		text += '<div class="img-wrapper">';
-	// 		text += '<img src="' + itemList[i].IMAGE + '" class="item-img"/>';
-	// 		text += '<div class="title-wrapper"><div class="item-title">' + itemList[i].NAME + '</div></div>';
-	// 		text += '</div>';
-	// 		text += '<div class="price-wrapper"><div class="item-price">Rs. ' + itemList[i].PRICE + '/-</div></div>';
-	// 		text += '<div class="order-wrapper">';
-	// 		text += '<input type="button" class="add-to-order-btn" value="Add to Order"/>';
-	// 		text += '</div>';
-	// 		text += '</div>';
-	// 	}
-	// 	$("#items-list").html(text);
+		$.ajax({
+			url: "/get_orderitems",
+			type: "get",
+			data: {id:orderList[orderIndex].ID},
+			success: function(response){
+				if(response.code==200){
+					orderItems = response.data;
+					displayOrderItems();
+					// console.log(orderItems);
+				}
+				else{
+					alert("404");
+				}
+			}
+		});
+	}
 
-	// 	$(".add-to-order-btn").each(function(){
+	var displayOrderItems = function(){
 
-	// 		$(this).click(function(){
+		var text = "<tr><th>#</th><th>NAME</th><th>QTY</th></tr>";
+		for(var i=0; i<orderItems.length; i++) {
 
-	// 			var item = $(this).closest('.item-container').index();
-	// 			addItemToOrder(item);
-	// 		});
-	// 	});
-	// }
+			text += "<tr>";
+			text += "<td>" + (i+1) + "</td>";
+			text += "<td>" + orderItems[i].NAME + "</td>";
+			text += "<td>" + orderItems[i].QTY + "</td>";
+			text += "</tr>";
+		}
+		$("#order-detail-tab").html(text);
 
-	// var addItemToOrder = function(item){
+		$("#order-detail").show();
 
-	// 	//if item is already in the orderlist, do nothing
-	// 	for(var i=0; i<orderList.length; i++)
-	// 		if(orderList[i]==item)
-	// 			return;
+		if(orderList[orderIndex].STATUS==PENDING)
+			$("#deliver-order").show();
+		else
+			$("#deliver-order").hide();
+	}
 
-	// 	orderList.push(item);
-	// 	qtyList.push(1);
-	// 	fillOrderTable();
-	// }
+	$("#deliver-checkbox").change(function(){
 
-	// var fillOrderTable = function(){
+		if($(this).prop('checked'))
+			$("#deliver-button").prop('disabled',false);
+		else
+			$("#deliver-button").prop('disabled',true);
+	});
 
-	// 	$("#order-total-amount").html(calculateBill());
+	$("#deliver-button").click(function(){
 
-	// 	var text = "";
-		// if(orderList.length>0)
-		// 	text = "<tr><th>#</th><th>NAME</th><th>RS.</th><th>QTY</th><th>PRICE</th><th></th></tr>";
-		// for(var i=0; i<orderList.length; i++){
+		$.ajax({
+			url: "/deliver_order",
+			type: "get",
+			data: {id:orderList[orderIndex].ID},
+			success: function(response){
+				if(response.code==200){
+					alert("200");
+				}
+				else{
+					alert("404");
+				}
+			}
+		});
+	});
 
-		// 	var j = orderList[i];
-		// 	text += '<tr>';
-		// 	text += '<td class="center">' + (i+1) + '</td>';
-		// 	text += '<td>'+ itemList[j].NAME +'</td>';
-		// 	text += '<td class="right">' + itemList[j].PRICE + '</td>';
-		// 	text += '<td><input type="number" min="1" value="' + qtyList[i] + '" class="item-qty"/></td>';
-		// 	text += '<td class="right total-item-price">' + itemList[j].PRICE*qtyList[i] + '</td>';
-		// 	text += '<td><input type="button" value="X" class="remove-item-btn"/></td>';
-		// 	text += '</tr>';
-		// }
-		// $("#order-table").html(text);
+	$.ajax({
+		url: "/get_menulist",
+		type: "get",
+		success: function(response){
+			if(response.code==200){
+				menuList = response.data;
+				displayMenuList();
+				// console.log(menuList);
+			}
+			else{
+				alert("404");
+			}
+		}
+	});
 
-	// 	$(".item-qty").each(function(){
+	var displayMenuList = function(){
 
-	// 		$(this).change(function(){
+		var text = "";
+		if(menuList.length>0)
+			text = "<tr><th>#</th><th>NAME</th><th>PRICE</th><th>AVAILABLE</th><th>EDIT</th></tr>";
+		for(var i=0; i<menuList.length; i++){
 
-	// 			var n = $(this).closest('tr').index()-1;
-	// 			var v = $(this).val();
-	// 			if(v<1){
-	// 				v = 1;
-	// 				$(this).val(v);
-	// 			}
-	// 			qtyList[n] = v;
-	// 			var price = itemList[orderList[n]].PRICE*v;
-	// 			$(".total-item-price").eq(n).html(price);
-	// 			$("#order-total-amount").html(calculateBill());
-	// 		});
-	// 	});
+			text += '<tr>';
+			text += '<td class="center">' + (i+1) + '</td>';
+			text += '<td> <input type="text" value="'+ menuList[i].NAME +'" class="edit-item-name" disabled/> </td>';
+			text += '<td> <input type="number" min="1" value="'+ menuList[i].PRICE +'" class="edit-item-price" disabled/> </td>';
+			var ischeck = "checked";
+			if(menuList[i].QTY==0)
+				ischeck = "";
+			text += '<td>' + '<input type="checkbox" class="available-checkbox edit-item-qty" '+ischeck+' disabled/>' + '</td>';
+			text += '<td><input type="button" value="Edit" class="edit-menu-item"/></td>';
+			text += '</tr>';
+		}
+		$("#menu-table").html(text);
 
-	// 	$(".remove-item-btn").each(function(){
+		$(".edit-menu-item").each(function(){
 
-	// 		$(this).click(function(){
+			$(this).click(function(){
 
-	// 			var n = $(this).closest('tr').index()-1;
-	// 			orderList.splice(n,1);
-	// 			qtyList.splice(n,1);
-	// 			fillOrderTable();
-	// 		});
-	// 	});
-	// }
+				var itemIndex = $(this).closest('tr').index() - 1;
+				
+				$(".edit-item-name").eq(itemIndex).prop("disabled",false).focus();
+				$(".edit-item-price").eq(itemIndex).prop("disabled",false);
+				$(".edit-item-qty").eq(itemIndex).prop("disabled",false);
 
-	// var calculateBill = function(){
+				$(this).unbind("click");
+				$(this).val("Save");
+				$(this).click(function(){
 
-	// 	var bill = 0;
-	// 	for(var i=0; i<orderList.length; i++){
+					$(this).unbind("click");
 
-	// 		var j = orderList[i];
-	// 		bill += itemList[j].PRICE*qtyList[i];
-	// 	}
-	// 	return bill;
-	// }
+					var obj = {};
+					obj["ID"] = menuList[itemIndex].ID;
+					obj["NAME"] = $(".edit-item-name").eq(itemIndex).val();
+					obj["PRICE"] = $(".edit-item-price").eq(itemIndex).val();
+					if($(".edit-item-qty").eq(itemIndex).prop("checked"))
+						obj["QTY"] = 1;
+					else
+						obj["QTY"] = 0;
+					$.ajax({
+						url: "/update_menu_item",
+						type: "get",
+						data: obj,
+						success: function(response){
+							if(response.code==200){
+								// alert("200");
+								menuList[itemIndex].NAME = obj.NAME;
+								menuList[itemIndex].PRICE = obj.PRICE;
+								menuList[itemIndex].QTY = obj.QTY;
+								console.log(menuList[itemIndex]);
+								displayMenuList();
+							}
+							else{
+								alert("404");
+							}
+						}
+					});
+				});
+			});
+		});
+	}
 
-	// $("#order-btn-wrapper").click(function(){
+	$("#get-order-btn").click(function(){
+		getOrderList();
+	});
 
-	// 	if(orderList.length==0){
-	// 		alert("Cart is empty");
-	// 		return;
-	// 	}
+	$("#hide-order-btn").click(function(){
+		$("#order-list").hide();
+	});
 
-	// 	var order = [];
-	// 	for(var i=0; i<orderList.length; i++){
-
-	// 		var j = orderList[i];
-	// 		order.push({
-	// 			ID: itemList[j].ID,
-	// 			QTY: qtyList[i]
-	// 		});
-	// 	}
-
-	// 	$.ajax({
-	// 		url: "/place_order",
-	// 		type: "post",
-	// 		data: { list:order, time: getSqlDateTime()},
-	// 		success: function(response){
-	// 			if(response.code==200){
-	// 				alert("Order successfully placed");
-	// 			}
-	// 			else{
-	// 				alert("404");
-	// 			}
-	// 		}
-	// 	});
-	// });
-
-	// var getSqlDateTime = function(){
-
-	// 	var date = new Date();
-	// 	date = date.getUTCFullYear() + '-' +
-	//     ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
-	//     ('00' + date.getUTCDate()).slice(-2) + ' ' + 
-	//     ('00' + date.getUTCHours()).slice(-2) + ':' + 
-	//     ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
-	//     ('00' + date.getUTCSeconds()).slice(-2);
-	//     return date;
-	// }
+	$("#hide-detail-btn").click(function(){
+		$("#order-detail").hide();
+	});
 });

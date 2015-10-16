@@ -93,6 +93,7 @@ app.post('/login',function(req,res){
 							return;
 						}
 					}
+					console.log("Credentials don't match");
 					res.json({"code":304});
 				}
 			}
@@ -116,7 +117,10 @@ app.get('/get_itemlist',function(req, res){
 			res.json({"code":500});
 		}
 
-		connection.query('SELECT * FROM MENU_ITEM',
+		connection.query('SELECT MENU_ITEM.ID, MENU_ITEM.NAME, CATEGORY.NAME "CATEGORY",'
+		 + ' MENU_ITEM.PRICE, MENU_ITEM.IMAGE'
+		 + ' FROM MENU_ITEM, CATEGORY WHERE MENU_ITEM.QUANTITY IS NOT NULL AND MENU_ITEM.QUANTITY > 0'
+		 + ' AND MENU_ITEM.CAT_ID = CATEGORY.ID ORDER BY CATEGORY.NAME, MENU_ITEM.NAME',
 			function(err,rows,fields) {
 
 				connection.release();
@@ -217,6 +221,125 @@ app.get('/get_orderlist',function(req, res){
 		);
 	});
 
+});
+
+app.get('/get_orderitems',function(req, res){
+
+	var id = req.query.id;
+
+	pool.getConnection(function(err,connection){
+
+		if (err) {
+			console.log("Failed to connect to the database");
+			res.json({"code":500});
+		}
+
+		connection.query('SELECT MENU_ITEM.NAME, ORDER_ITEM.QTY FROM MENU_ITEM, ORDER_ITEM'
+			+ ' WHERE MENU_ITEM.ID=ORDER_ITEM.ITEM_ID'
+			+ ' AND ORDER_ID=?', [id],
+			function(err,rows,fields) {
+
+				connection.release();
+				if(err){
+					console.log("Failed to fetch order items");
+					res.json({"code":500});
+				}
+				else{
+					res.json({"code":200, "data":rows});
+				}
+			}
+
+		);
+	});
+});
+
+app.get('/deliver_order',function(req, res){
+
+	var id = req.query.id;
+
+	pool.getConnection(function(err,connection){
+
+		if (err) {
+			console.log("Failed to connect to the database");
+			res.json({"code":500});
+		}
+
+		connection.query('UPDATE FACULTY_ORDER SET STATUS=? WHERE ID = ?', [DELIVERED, id],
+			function(err,rows,fields) {
+
+				connection.release();
+				if(err){
+					console.log("Failed to fetch order items");
+					res.json({"code":500});
+				}
+				else{
+					res.json({"code":200});
+				}
+			}
+
+		);
+	});
+
+});
+
+app.get('/get_menulist',function(req, res){
+
+	var id = req.query.id;
+
+	pool.getConnection(function(err,connection){
+
+		if (err) {
+			console.log("Failed to connect to the database");
+			res.json({"code":500});
+		}
+
+		connection.query('SELECT ID, NAME, PRICE, QUANTITY "QTY" FROM MENU_ITEM',
+			function(err,rows,fields) {
+
+				connection.release();
+				if(err){
+					console.log("Failed to fetch order items");
+					res.json({"code":500});
+				}
+				else{
+					res.json({"code":200, "data":rows});
+				}
+			}
+
+		);
+	});
+});
+
+app.get('/update_menu_item',function(req, res){
+
+	var id = req.query.ID;
+	var name = req.query.NAME;
+	var price = req.query.PRICE;
+	var qty = req.query.QTY;
+
+	pool.getConnection(function(err,connection){
+
+		if (err) {
+			console.log("Failed to connect to the database");
+			res.json({"code":500});
+		}
+
+		connection.query('UPDATE MENU_ITEM SET NAME=?, PRICE=?, QUANTITY=? WHERE ID=?',
+			[name,price,qty,id],
+			function(err,rows,fields) {
+
+				connection.release();
+				if(err){
+					console.log("Failed to fetch order items");
+					res.json({"code":500});
+				}
+				else{
+					res.json({"code":200, "data":rows});
+				}
+			}
+
+		);
+	});
 });
 
 // app.post('/api/photo', multipartMiddleware,function(req,res){

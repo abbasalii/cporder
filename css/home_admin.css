@@ -1,144 +1,55 @@
-#order-table th,td{
-	border: 1px solid black;
-	padding: 4px;
-}
-
-/*.item-container{
-	position: relative;
-	width: 192px;
-	border: 1px solid #000;
-	float: left;
-	margin: 8px;
-}
-
-.img-wrapper{
-	position: relative;
-	width: 100%;
-	background-color: #fff;
-}
-
-.item-img{
-	width: 79%;
-	border: 20px solid #D62F27;
-}
-
-.title-wrapper{
+#order-list{
+	display: none;
 	position: absolute;
 	top: 0;
-	left: 0;
-	background-color: rgba(0,0,0,0.3);
+	right: 0;
 	width: 100%;
-}
-
-.item-title{
-	color: #fff;
-	font-size: 14pt;
-	padding: 8px;
-}
-
-.price-wrapper{
-	background-color: #2B0F26;
-	width: 100%;
+	min-height: 100%;
+	background-color: #3FB3B2;
 	text-align: center;
 }
 
-.item-price{
-	color: #fff;
-	font-size: 11pt;
-	padding: 8px;
-}
-
-.order-wrapper{
-	background-color: #FFC90A;
-	color: #fff;
-	width: 100%;
-}
-
-.add-to-order-btn{
-	background: none;
-	outline: none;
-	border: none;
-	width: 100%;
-	padding: 8px;
-	font-size: 11pt;
-	color: #fff;
-}
-
-.add-to-order-btn:hover{
-	background: rgba(0,0,0,0.3);
-	cursor: pointer;
-}
-
-#order-detail{
-	background-color: #FFC90A;
-	position: fixed;
-	right: 16px;
-	top: 96px;
-	width: 320px;
-	height: 384px;
-	border: 1px solid black;
-}
-
-#order-list{
-	width: 100%;
-	max-height: 90%;
-	overflow-y: scroll;
+.inner{
+	position: relative;
+	display: inline-block;
 }
 
 #order-table{
-	width: 100%;
+	margin-top: 16px;
 }
 
-#order-table th{
-	background-color: #D62F27;
-	color: #fff;
-}
-
-#order-table th,td{
-	padding: 4px;
+#order-table th,#order-table td{
 	border: 1px solid black;
-	border-collapse: collapse;
+	padding: 4px;
 }
 
-.item-qty{
-	width: 32px;
-	text-align: right;
-}
-
-.remove-item-btn{
-	background: none;
-	outline: none;
-	border: none;
-	font-weight: bold;
-}
-
-.remove-item-btn:hover{
-	cursor: pointer;
-}
-
-#total-wrapper{
-	background-color: #D62F27;
-	color: #fff;
-	padding: 8px;
+#order-detail{
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	min-height: 100%;
+	background-color: #3FB3B2;
 	text-align: center;
 }
 
-#order-btn-wrapper{
-	background-color: #2B0F26;
+#order-detail-tab{
+	margin-top: 32px;
 }
 
-#place-order-btn{
-	background: none;
-	outline: none;
-	border: none;
-	width: 100%;
-	padding: 8px;
-	font-size: 11pt;
-	color: #fff;
+#order-detail-tab th,#order-detail-tab td{
+	border: 1px solid black;
+	padding: 4px;
 }
 
-#place-order-btn:hover{
-	background: rgba(0,0,0,0.3);
-	cursor: pointer;
+#menu-table th, #menu-table td{
+	border: 1px solid black;
+	padding: 4px;
 }
-*/
+
+.dismiss-btn{
+	position: absolute;
+	top: 0;
+	right: 0;
+}
