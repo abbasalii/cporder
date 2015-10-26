@@ -1,6 +1,6 @@
 $(function(){
 	
-	var socket = io.connect("localhost:8080");
+	var socket = io.connect("http://centralperk.azurewebsites.net:80");
 	var itemList = null;
 	var orderList = [];
 	var qtyList = [];
@@ -10,7 +10,7 @@ $(function(){
 		type: "get",
 		success: function(response){
 			if(response.code==200){
-				itemList = response.data;console.log(itemList);
+				itemList = response.data;//console.log(itemList);
 				displayItemList(itemList);
 			}
 			else{
@@ -134,29 +134,33 @@ $(function(){
 			return;
 		}
 
-		var order = [];
-		for(var i=0; i<orderList.length; i++){
+		if(confirm("Are you sure to place the order?"))
+		{
+			var order = [];
+			for(var i=0; i<orderList.length; i++){
 
-			var j = orderList[i];
-			order.push({
-				ID: itemList[j].ID,
-				QTY: qtyList[i]
+				var j = orderList[i];
+				order.push({
+					ID: itemList[j].ID,
+					QTY: qtyList[i]
+				});
+			}
+
+			$.ajax({
+				url: "/place_order",
+				type: "post",
+				data: { list:order, time: getSqlDateTime()},
+				success: function(response){
+					if(response.code==200){
+						alert("Order successfully placed");
+						$("#order-table").html("");
+					}
+					else{
+						alert("Failed to place the order");
+					}
+				}
 			});
 		}
-
-		$.ajax({
-			url: "/place_order",
-			type: "post",
-			data: { list:order, time: getSqlDateTime()},
-			success: function(response){
-				if(response.code==200){
-					alert("Order successfully placed");
-				}
-				else{
-					alert("404");
-				}
-			}
-		});
 	});
 
 	var getSqlDateTime = function(){

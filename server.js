@@ -1,4 +1,5 @@
-var PORT = 8080;
+var PORT = process.env.PORT;
+// var PORT = 8080;
 
 var ADMINISTRATOR = 10;
 var END_USER = 100;
@@ -20,11 +21,11 @@ var multipartMiddleware = multipart();
 var app = express();
 
 var pool 	=    mysql.createPool({
-    connectionLimit : 10,
-    host     : 'localhost',
+    connectionLimit : 4,
+    host     : '207.46.136.162',
     port 	 : 3306,
-    user     : 'root',
-    password : 'lionking',
+    user     : 'b6def0292b6932',
+    password : 'af9bbea6',
     database : 'cporder',
     debug    :  false
 });
@@ -54,6 +55,16 @@ app.get('/home',function(req, res){
 		res.redirect('/login');
 	}
 });
+// Database=cporder;Data Source=ap-cdbr-azure-east-c.cloudapp.net;User Id=b6def0292b6932;Password=af9bbea6
+app.get('/',function(req, res){
+
+	if(req.session.login){
+		res.redirect('/home');
+	}
+	else{
+		res.sendFile(__dirname +'/html/login.html');
+	}
+});
 
 app.get('/login',function(req, res){
 
@@ -80,7 +91,7 @@ app.post('/login',function(req,res){
 		connection.query('SELECT * FROM SYSTEM_USER',
 			function(err,rows,fields) {
 				if(err){
-					console.log("Failed to fetch users");
+					// console.log("Failed to fetch users");
 					connection.release();
 					res.json({"code":500});
 				}
@@ -89,12 +100,12 @@ app.post('/login',function(req,res){
 					for(var i=0; i<rows.length; i++){
 						if(rows[i]['USER_NAME']==user && rows[i]['PASSWORD']==pass){
 							req.session.login = rows[i];
-							res.json({"code":200});
+							res.json({"code":200,"session":req.session});
 							return;
 						}
 					}
-					console.log("Credentials don't match");
-					res.json({"code":304});
+					// console.log("Credentials don't match");
+					res.json({"code":304,"session":req.session});
 				}
 			}
 

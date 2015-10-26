@@ -9,6 +9,8 @@ $(function(){
 					window.location = "/home";
 				else
 					$("#error").show();
+				// console.log(response.code);
+				// console.log(response.session);
 			}
 		});
 		return false;

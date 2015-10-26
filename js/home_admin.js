@@ -3,7 +3,7 @@ $(function(){
 	var PENDING = 10;
 	var DELIVERED = 100;
 	
-	var socket = io.connect("localhost:8080");
+	var socket = io.connect("http://centralperk.azurewebsites.net:80");
 	var itemList = null;
 	var orderList = [];
 	var qtyList = [];
@@ -207,7 +207,7 @@ $(function(){
 								menuList[itemIndex].NAME = obj.NAME;
 								menuList[itemIndex].PRICE = obj.PRICE;
 								menuList[itemIndex].QTY = obj.QTY;
-								console.log(menuList[itemIndex]);
+								// console.log(menuList[itemIndex]);
 								displayMenuList();
 							}
 							else{
