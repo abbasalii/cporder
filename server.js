@@ -22,10 +22,10 @@ var app = express();
 
 var pool 	=    mysql.createPool({
     connectionLimit : 4,
-    host     : '207.46.136.162',
+    host     : '207.46.136.162',//'localhost',//
     port 	 : 3306,
-    user     : 'b6def0292b6932',
-    password : 'af9bbea6',
+    user     : 'b6def0292b6932',//'root',//
+    password : 'af9bbea6',//'lionking',//
     database : 'cporder',
     debug    :  false
 });
@@ -55,8 +55,18 @@ app.get('/home',function(req, res){
 		res.redirect('/login');
 	}
 });
-// Database=cporder;Data Source=ap-cdbr-azure-east-c.cloudapp.net;User Id=b6def0292b6932;Password=af9bbea6
+
 app.get('/',function(req, res){
+
+	if(req.session.login){
+		res.redirect('/home');
+	}
+	else{
+		res.redirect('/login');
+	}
+});
+
+app.get('/cp-admin',function(req, res){
 
 	if(req.session.login){
 		res.redirect('/home');
@@ -66,14 +76,31 @@ app.get('/',function(req, res){
 	}
 });
 
+var isOrderTime = function() {
+	var d = new Date();
+	var h = (d.getHours() + 5 ) % 24;
+	var m = d.getMinutes();
+	if(h<10 || (h>13) || (h==12 && m>=30))
+		return false
+	return true;
+	// return h + " : " + m;
+}
+
+app.get('/gettime',function(req,res){
+
+	res.json({"Resonse": isOrderTime()});
+});
+
 app.get('/login',function(req, res){
 
 	if(req.session.login){
 		res.redirect('/home');
 	}
-	else{
+	else if(isOrderTime()==true){
 		res.sendFile(__dirname +'/html/login.html');
 	}
+	else
+		res.sendFile(__dirname +'/html/sorry.html');
 });
 
 app.post('/login',function(req,res){
@@ -88,7 +115,7 @@ app.post('/login',function(req,res){
 			res.json({"code":500});
 		}
 
-		connection.query('SELECT * FROM SYSTEM_USER',
+		connection.query('SELECT * FROM SYSTEM_USER WHERE USER_NAME=? AND PASSWORD=?', [user,pass],
 			function(err,rows,fields) {
 				if(err){
 					// console.log("Failed to fetch users");
@@ -97,15 +124,18 @@ app.post('/login',function(req,res){
 				}
 				else{
 					connection.release();
-					for(var i=0; i<rows.length; i++){
-						if(rows[i]['USER_NAME']==user && rows[i]['PASSWORD']==pass){
-							req.session.login = rows[i];
+					// for(var i=0; i<rows.length; i++){
+					// 	if(rows[i]['USER_NAME']==user && rows[i]['PASSWORD']==pass){
+						if(rows.length>0) {
+							req.session.login = rows[0];
 							res.json({"code":200,"session":req.session});
-							return;
 						}
-					}
+					// 		return;
+					// 	}
+					// }
 					// console.log("Credentials don't match");
-					res.json({"code":304,"session":req.session});
+					else
+						res.json({"code":304,"session":req.session});
 				}
 			}
 
@@ -155,6 +185,11 @@ app.post('/place_order',function(req,res){
 	if(!user)
 		return;
 
+	if(isOrderTime()==false){
+		res.json({"code":404});
+		return;
+	}
+
 	var uid = user['ID'];
 	var order = req.body.list;
 	var date = req.body.time;
@@ -167,7 +202,7 @@ app.post('/place_order',function(req,res){
 		}
 
 		var query = 'INSERT INTO FACULTY_ORDER (ORDER_BY, ORDER_DATE, STATUS) VALUES (?,?,?)';
-		console.log("Date: "+date);
+		// console.log("Date: "+date);
 		connection.query(query,[uid,date,PENDING],
 			function(err,rows,fields){
 				if(err){
@@ -346,6 +381,42 @@ app.get('/update_menu_item',function(req, res){
 				}
 				else{
 					res.json({"code":200, "data":rows});
+				}
+			}
+
+		);
+	});
+});
+
+app.post('/change_password',function(req,res){
+
+	var old = req.body.old;
+	var newp = req.body.new;
+
+	var user = req.session.login;
+
+	if(user==undefined)
+		return;
+	if(user.PASSWORD != old)
+		res.json({"code":301});
+
+	pool.getConnection(function(err,connection){
+
+		if (err) {
+			console.log("Failed to connect to the database");
+			res.json({"code":500});
+		}
+
+		connection.query('UPDATE SYSTEM_USER SET PASSWORD=? WHERE ID=?', [newp,user.ID],
+			function(err,rows,fields) {
+				if(err){
+					// console.log("Failed to fetch users");
+					connection.release();
+					res.json({"code":500});
+				}
+				else{
+					connection.release();
+					res.json({"code":200});
 				}
 			}
 

@@ -13,6 +13,8 @@
 <body>
 	<div id="header">
 		<img id="header-image" src="logo.png" alt="Logo"/>
+		<h1 id="ondemand">Faculty on Demand</h1>
+		<span id="chanpass">Change Password</span>
 		<a id="logout-btn" href="/logout">Logout</a>
 	</div>
 	<div id="content">
@@ -26,6 +28,31 @@
 			</div>
 			<div id="total-wrapper"><div id="order-total">Total: Rs. <span id="order-total-amount">0</span>/-</div></div>
 			<div id="order-btn-wrapper"><input id="place-order-btn" type="button" value="Place Order"/></div>
+		</div>
+
+		<div id="policy-div">
+			<ul>
+				<li>Orders can only be placed from 10:00 AM to 12:30 PM.</li>
+				<!-- <li>Orders will be delivered in first quarter of the break hour.</li> -->
+				<li>Orders will be delivered in the room of the faculty member during first quarter of the break hour.</li>
+				<li>For now delivery service is only available in SEECS</li>
+				<li>Rs. 20 service charges apply for every order.</li>
+				<li>Any complaints/suggestions can be registered at <a href="http://goo.gl/forms/YQ2skm2fSK">Link</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="new-pass-div">
+		<div id="login-div">
+			<form id="form" action="/change_password" method="post">
+				<div><input id="old-pass" class="input-field" type="password" name="old" placeholder="Old Password" required/></div>
+				<div><input id="new-pass" class="input-field" type="password" name="new" placeholder="New Password" required/></div>
+				<div><input id="new-pass2" class="input-field" type="password" name="pass" placeholder="Confirm Password" required/></div>
+				<div id="error">*invalid username or password</div>
+				<div>
+					<input id="hide-pass" class="input-button cc" type="button" value="Cancel"/>
+					<input class="input-button" type="submit" value="Change"/>
+				</div>
+			</form>
 		</div>
 	</div>
 	<!-- <div id="footer"></div> -->

@@ -174,4 +174,45 @@ $(function(){
 	    ('00' + date.getUTCSeconds()).slice(-2);
 	    return date;
 	}
+
+	$("#chanpass").click(function(){
+		$("#error").hide();
+		$("#new-pass-div").show();
+	});
+
+	$("#hide-pass").click(function(){
+		$("#new-pass-div").hide();
+	});
+
+	$('#form').submit(function(){
+
+		var one = $("#new-pass").val();
+		var two = $("#new-pass2").val();
+		if(one!=two){
+			$("#error").html("* password mismatch").show();
+			return false;
+		}
+
+		if(one.length<7 || one.length>10){
+			$("#error").html("* password should be 8-10 characters").show();
+			return false;
+		}
+		$.ajax({
+			url: $('#form').attr('action'),
+			type: "post",
+			data : $('#form').serialize(),
+			success: function(response){
+				if(response.code==200){
+					alert("Password successfully changed");
+					$("#new-pass-div").hide();
+				}
+				else if(response.code==301){
+					$("#error").html("* incorrect password").show();
+				}
+				else
+					$("#error").html("* password update failed").show();
+			}
+		});
+		return false;
+	});
 });
